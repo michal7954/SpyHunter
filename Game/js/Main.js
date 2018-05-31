@@ -1,29 +1,14 @@
+var data;
+
 window.onload = function () {
-
-    //data = new Data();
-    //var ctx = data.ctx
-
-
-
-    //img = document.getElementsByTagName("img")[0];
-    //console.log(data.area)
-    //var c = document.getElementById("canvas");
-    //var ctx = c.getContext("2d");
-
-    //console.log(data.elements)
-
-
+    data = new Data();
+    render();
 };
 
 
-var img = document.getElementById("area")
-img.on('imageloadend', function () {
-    draw()
-});
+function render() {
+    data.ctx.drawImage(data.area, 0, data.frame, 480, 65535);
+    data.frame = data.frame + data.speed;
 
-function draw() {
-    var canvas = document.getElementById("canvas");
-    var ctx = this.canvas.getContext("2d");
-
-    ctx.drawImage(img, 10, 10, 150, 180);
-}
+    requestAnimationFrame(render);
+};

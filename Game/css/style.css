@@ -29,3 +29,7 @@ canvas {
 #area {
     height: 65535px;
 }
+
+img {
+    display: none;
+}
