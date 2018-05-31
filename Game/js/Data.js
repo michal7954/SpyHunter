@@ -11,7 +11,7 @@ function Data() {
     this.area.src = "gfx/area.png";
     this.area.alt = "area";
 
-    this.frame = -65535 + 560;
-    this.speed = 3;
+    this.frame = -65535 + 590;
+    this.speed = 100;
 
 }
