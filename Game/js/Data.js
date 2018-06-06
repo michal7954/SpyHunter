@@ -11,8 +11,15 @@ function Data() {
     this.area.src = "gfx/area.png";
     this.area.alt = "area";
 
-    //this.frame = -65535 + 590;
-    this.frame = -54642
+    //this.height = -65535 + 590;
+    this.height = -54642
+
+    this.frame = 0;
+    this.shot_frame;
+    this.shot_freq = 1;
+    this.shots = []
+    this.distance = 150
+    this.bullet_speed = 5;
 
     this.speed = {
         curr: 0,
@@ -22,7 +29,7 @@ function Data() {
         deceleration: -0.3,
         poz_range: 10,
         poz_addition: 180,
-        turn_radius: 4
+        turn_radius: 5
     }
 
     this.poz = {
@@ -48,4 +55,6 @@ function Data() {
         red: [207, 0, 0, 255],
         curr: [121, 121, 121, 255],
     }
+
+
 }

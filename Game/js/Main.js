@@ -1,6 +1,8 @@
 var data;
 var events;
 
+var old_shot;
+
 window.onload = function () {
 
     data = new Data();
@@ -12,8 +14,8 @@ window.onload = function () {
 function render() {
 
     // MAPA
-    data.ctx.drawImage(data.area, 0, data.frame, 480, 65535);
-    data.frame = data.frame + data.speed.curr;
+    data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
+    data.height = data.height + data.speed.curr;
 
 
     //KOLIZJE Z MAPĄ
@@ -40,7 +42,7 @@ function render() {
     }
     else if (kol.wl || kol.wr) {
         //drgawki
-        if (data.frame % 2 == 0) {
+        if (data.height % 2 == 0) {
             data.poz.trans = 2;
         }
         else {
@@ -51,12 +53,6 @@ function render() {
         //gut
         data.poz.trans = 0;
     }
-
-
-
-
-
-
 
 
     //WYBÓR POJAZDU
@@ -73,7 +69,9 @@ function render() {
             data.colors.curr = data.colors.blue;
         }
     }
+
     else if (pixel[0] == data.colors.grey[0] && pixel[1] == data.colors.grey[1] && pixel[2] == data.colors.grey[2] && pixel[3] == data.colors.grey[3]) {
+
         if (events.up && data.speed.curr <= data.speed.max) {
             data.map.curr = data.map.speedy;
             data.colors.curr = data.colors.grey;
@@ -96,7 +94,6 @@ function render() {
 
     data.ctx.drawImage(data.elements, data.map.curr[0], data.map.curr[1], data.map.curr[2], data.map.curr[3], data.poz.x + data.poz.trans, data.poz.y, data.map.curr[2], data.map.curr[3]);
 
-
     if (events.down) {
         if (data.speed.curr + data.speed.deceleration < data.speed.min) {
             data.speed.curr = data.speed.min;
@@ -115,6 +112,48 @@ function render() {
     }
 
 
+    //STRZAŁY
+
+    if (events.fire) {
+        if (data.frame - data.shot_frame > data.shot_freq || data.shot_frame == undefined) {
+            data.shot_frame = data.frame
+
+            var shot = {
+                x: data.poz.x,
+                y: data.poz.y,
+                ttl: data.distance / data.bullet_speed,
+            }
+            data.shots.push(shot)
+        }
+    }
+
+
+    for (i = 0; i < data.shots.length; i++) {
+
+        if (data.shots[i].ttl > 0) {
+            data.ctx.beginPath();
+
+            data.ctx.moveTo(data.shots[i].x, data.shots[i].y);
+            data.ctx.lineTo(data.shots[i].x, data.shots[i].y - 2);
+
+            data.ctx.moveTo(data.shots[i].x + data.map.curr[2], data.shots[i].y);
+            data.ctx.lineTo(data.shots[i].x + data.map.curr[2], data.shots[i].y - 2);
+
+            data.ctx.lineWidth = 2;
+            data.ctx.strokeStyle = "rgba(1,0,0,1)"
+            data.ctx.stroke();
+
+            data.shots[i].ttl--;
+            data.shots[i].y = data.shots[i].y - data.bullet_speed;
+        }
+        else {
+            data.shots.splice(i, 1);
+        }
+    }
+
+
+
+
 
     //RYSOWANIE PUNKTÓW SPRAWDZANIA
     data.ctx.beginPath();
@@ -125,8 +164,8 @@ function render() {
     data.ctx.moveTo(data.poz.x + data.map.curr[4] + data.map.curr[2], data.poz.y);
     data.ctx.lineTo(data.poz.x + data.map.curr[4] + data.map.curr[2], data.poz.y - 2);
 
-    data.ctx.moveTo(data.poz.x, data.poz.y - 4);
-    data.ctx.lineTo(data.poz.x, data.poz.y - 6);
+    //data.ctx.moveTo(data.poz.x, data.poz.y - 4);
+    //data.ctx.lineTo(data.poz.x, data.poz.y - 6);
 
     data.ctx.lineWidth = 1;
     data.ctx.strokeStyle = "rgba(0,0,0,1)"
@@ -136,8 +175,6 @@ function render() {
 
 
 
-
-
-
+    data.frame++;
     requestAnimationFrame(render);
 };
