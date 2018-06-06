@@ -6,6 +6,7 @@ window.onload = function () {
     data = new Data();
     events = new Events();
     render();
+
 };
 
 function render() {
@@ -17,13 +18,21 @@ function render() {
 
     //KOLIZJE Z MAPĄ
     var kol = {
-        pl: data.ctx.getImageData(data.poz.x - data.poz.r, data.poz.y - 1, 1, 1).data,
-        pr: data.ctx.getImageData(data.poz.x + data.poz.r + data.map.player[2], data.poz.y - 1, 1, 1).data,
+        pl: data.ctx.getImageData(data.poz.x - data.map.curr[4], data.poz.y - 1, 1, 1).data,
+        pr: data.ctx.getImageData(data.poz.x + data.map.curr[4] + data.map.curr[2], data.poz.y - 1, 1, 1).data,
+        wl: true,
+        wr: true,
     }
+    //console.log(kol.pl)
 
-    kol.wl = !(kol.pl[0] == 120 && kol.pl[1] == 120 && kol.pl[2] == 120 && kol.pl[3] == 255);
-    kol.wr = !(kol.pr[0] == 120 && kol.pr[1] == 120 && kol.pr[2] == 120 && kol.pr[3] == 255);
-
+    for (i = 0; i < data.colors_tab.length; i++) {
+        if (kol.pl[0] == data.colors[data.colors_tab[i]][0] && kol.pl[1] == data.colors[data.colors_tab[i]][1] && kol.pl[2] == data.colors[data.colors_tab[i]][2] && kol.pl[3] == data.colors[data.colors_tab[i]][3]) {
+            kol.wl = false;
+        }
+        if (kol.pr[0] == data.colors[data.colors_tab[i]][0] && kol.pr[1] == data.colors[data.colors_tab[i]][1] && kol.pr[2] == data.colors[data.colors_tab[i]][2] && kol.pr[3] == data.colors[data.colors_tab[i]][3]) {
+            kol.wr = false;
+        }
+    }
 
     if (kol.wl && kol.wr) {
         //bum
@@ -32,10 +41,10 @@ function render() {
     else if (kol.wl || kol.wr) {
         //drgawki
         if (data.frame % 2 == 0) {
-            data.poz.trans = 1;
+            data.poz.trans = 2;
         }
         else {
-            data.poz.trans = -1;
+            data.poz.trans = -2;
         }
     }
     else {
@@ -45,18 +54,37 @@ function render() {
 
 
 
-    data.ctx.beginPath();
 
-    data.ctx.moveTo(data.poz.x - data.poz.r, data.poz.y);
-    data.ctx.lineTo(data.poz.x - data.poz.r, data.poz.y - 2);
 
-    data.ctx.moveTo(data.poz.x + data.poz.r + data.map.player[2], data.poz.y);
-    data.ctx.lineTo(data.poz.x + data.poz.r + data.map.player[2], data.poz.y - 2);
 
-    data.ctx.lineWidth = 1;
-    data.ctx.strokeStyle = "rgba(0,0,0,1)"
-    data.ctx.stroke();
 
+
+    //WYBÓR POJAZDU
+    var pixel = data.ctx.getImageData(data.poz.x, data.poz.y - 4, 1, 1).data;
+
+    if (pixel[0] == data.colors.blue[0] && pixel[1] == data.colors.blue[1] && pixel[2] == data.colors.blue[2] && pixel[3] == data.colors.blue[3]) {
+
+        if (events.up && data.speed.curr <= data.speed.max) {
+            data.map.curr = data.map.fastship;
+            data.colors.curr = data.colors.blue;
+        }
+        else {
+            data.map.curr = data.map.ship;
+            data.colors.curr = data.colors.blue;
+        }
+    }
+    else if (pixel[0] == data.colors.grey[0] && pixel[1] == data.colors.grey[1] && pixel[2] == data.colors.grey[2] && pixel[3] == data.colors.grey[3]) {
+        if (events.up && data.speed.curr <= data.speed.max) {
+            data.map.curr = data.map.speedy;
+            data.colors.curr = data.colors.grey;
+
+        }
+        else {
+            data.map.curr = data.map.player;
+            data.colors.curr = data.colors.grey;
+
+        }
+    }
 
 
 
@@ -64,12 +92,10 @@ function render() {
     if (events.up && data.speed.curr <= data.speed.max) {
         data.speed.curr = data.speed.curr + data.speed.acceleration;
         data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
+    }
 
-        data.ctx.drawImage(data.elements, data.map.speedy[0], data.map.speedy[1], data.map.speedy[2], data.map.speedy[3], data.poz.x + data.poz.trans, data.poz.y, data.map.speedy[2], data.map.speedy[3]);
-    }
-    else {
-        data.ctx.drawImage(data.elements, data.map.player[0], data.map.player[1], data.map.player[2], data.map.player[3], data.poz.x + data.poz.trans, data.poz.y, data.map.player[2], data.map.player[3]);
-    }
+    data.ctx.drawImage(data.elements, data.map.curr[0], data.map.curr[1], data.map.curr[2], data.map.curr[3], data.poz.x + data.poz.trans, data.poz.y, data.map.curr[2], data.map.curr[3]);
+
 
     if (events.down) {
         if (data.speed.curr + data.speed.deceleration < data.speed.min) {
@@ -90,7 +116,21 @@ function render() {
 
 
 
+    //RYSOWANIE PUNKTÓW SPRAWDZANIA
+    data.ctx.beginPath();
 
+    data.ctx.moveTo(data.poz.x - data.map.curr[4], data.poz.y);
+    data.ctx.lineTo(data.poz.x - data.map.curr[4], data.poz.y - 2);
+
+    data.ctx.moveTo(data.poz.x + data.map.curr[4] + data.map.curr[2], data.poz.y);
+    data.ctx.lineTo(data.poz.x + data.map.curr[4] + data.map.curr[2], data.poz.y - 2);
+
+    data.ctx.moveTo(data.poz.x, data.poz.y - 4);
+    data.ctx.lineTo(data.poz.x, data.poz.y - 6);
+
+    data.ctx.lineWidth = 1;
+    data.ctx.strokeStyle = "rgba(0,0,0,1)"
+    data.ctx.stroke();
 
 
 
