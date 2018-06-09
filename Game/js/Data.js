@@ -11,8 +11,8 @@ function Data() {
     this.area.src = "gfx/area.png";
     this.area.alt = "area";
 
-    //this.height = -65535 + 590;
-    this.height = -54642
+    this.height = -65535 + 590;
+    //this.height = -54642
     //this.height = -65535 + 300
 
     this.frame = 0;
@@ -47,7 +47,7 @@ function Data() {
         fastship: [43, 258, 26, 38, -8],
         curr: [21, 23, 13, 23, 4],
 
-        civil3: [300, 32, 12, 23, 8]
+        civil3: [300, 32, 12, 23, 4]
     }
 
     this.colors_tab = ["grey", "blue", "red"];

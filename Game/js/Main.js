@@ -14,7 +14,7 @@ window.onload = function () {
     setTimeout(function () {
         render();
 
-        bots.push(new Bot());
+
     }, 1000)
 
 
@@ -226,3 +226,6 @@ function render() {
     requestAnimationFrame(render);
 };
 
+setInterval(function () {
+    bots.push(new Bot());
+}, 2000)
