@@ -1,5 +1,6 @@
 var data;
 var events;
+var bots = [];
 
 var old_shot;
 
@@ -11,14 +12,9 @@ window.onload = function () {
     data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
 
     setTimeout(function () {
-
-
-
-
-
         render();
 
-
+        bots.push(new Bot());
     }, 1000)
 
 
@@ -62,6 +58,28 @@ function render() {
     if (kol.wl && kol.wr) {
         //bum
         data.speed.curr = 0;
+        //data.poz.x = 200
+        data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
+
+
+        /*
+        var i = 80;
+        var x = 0;
+        
+        while (data.ctx.getImageData(351 - i, data.poz.y, 1, 1).data != data.colors.grey) {
+            i++;
+            //x = 351 - i
+        }
+        
+        while (i < 200) {
+            console.log(data.ctx.getImageData(351 - i, data.poz.y, 1, 1).data)
+            i++
+            if (data.ctx.getImageData(i, data.poz.y, 1, 1).data == data.colors.grey) {
+                x = i
+            }
+        }
+        data.poz.x = i
+        */
     }
     else if (kol.wl || kol.wr) {
         //drgawki
@@ -174,6 +192,12 @@ function render() {
         }
     }
 
+    //BOTY
+
+    for (i = 0; i < bots.length; i++) {
+        bots[i].render()
+    }
+
 
 
 
@@ -201,3 +225,4 @@ function render() {
     data.frame++;
     requestAnimationFrame(render);
 };
+

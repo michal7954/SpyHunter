@@ -46,6 +46,8 @@ function Data() {
         ship: [13, 258, 26, 38, -8],
         fastship: [43, 258, 26, 38, -8],
         curr: [21, 23, 13, 23, 4],
+
+        civil3: [300, 32, 12, 23, 8]
     }
 
     this.colors_tab = ["grey", "blue", "red"];
@@ -57,6 +59,4 @@ function Data() {
         red: [207, 0, 0, 255],
         curr: [121, 121, 121, 255],
     }
-
-
 }
