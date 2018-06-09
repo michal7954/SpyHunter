@@ -13,6 +13,7 @@ function Data() {
 
     //this.height = -65535 + 590;
     this.height = -54642
+    //this.height = -65535 + 300
 
     this.frame = 0;
     this.shot_frame;
@@ -50,7 +51,8 @@ function Data() {
     this.colors_tab = ["grey", "blue", "red"];
 
     this.colors = {
-        grey: [121, 121, 121, 255],
+        grey: [0],
+        //grey: [121, 121, 121, 255],
         blue: [76, 109, 243, 255],
         red: [207, 0, 0, 255],
         curr: [121, 121, 121, 255],

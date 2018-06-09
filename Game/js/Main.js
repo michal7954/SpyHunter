@@ -7,15 +7,38 @@ window.onload = function () {
 
     data = new Data();
     events = new Events();
-    render();
+
+    data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
+
+    setTimeout(function () {
+
+
+
+
+
+        render();
+
+
+    }, 1000)
+
 
 };
 
 function render() {
 
     // MAPA
+
     data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
     data.height = data.height + data.speed.curr;
+
+
+    if (data.colors.grey[0] == 0) {
+        data.ctx.drawImage(data.area, 0, 65534, 3, 1, 0, 299, 3, 1)
+
+        data.colors.grey = data.ctx.getImageData(0, 299, 1, 1).data;
+        data.colors.blue = data.ctx.getImageData(1, 299, 1, 1).data;
+        data.colors.red = data.ctx.getImageData(2, 299, 1, 1).data;
+    }
 
 
     //KOLIZJE Z MAPĄ
