@@ -1,5 +1,6 @@
 var data;
 var events;
+var f;
 var bots = [];
 
 var old_shot;
@@ -8,6 +9,7 @@ window.onload = function () {
 
     data = new Data();
     events = new Events();
+    f = new Functions()
 
     data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
 
@@ -15,6 +17,7 @@ window.onload = function () {
         render();
 
 
+        bots.push(new Bot());
     }, 1000)
 
 
@@ -26,7 +29,8 @@ function render() {
 
     data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
     data.height = data.height + data.speed.curr;
-
+    //console.log(f.colorColl(data.poz.x, data.poz.y, data.colors.grey))
+    //console.log(data.ctx.getImageData(-10, -10, 1, 1).data)
 
     if (data.colors.grey[0] == 0) {
         data.ctx.drawImage(data.area, 0, 65534, 3, 1, 0, 299, 3, 1)
@@ -226,6 +230,7 @@ function render() {
     requestAnimationFrame(render);
 };
 
+
 setInterval(function () {
     bots.push(new Bot());
-}, 2000)
+}, 1000)

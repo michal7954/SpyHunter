@@ -11,8 +11,9 @@ function Data() {
     this.area.src = "gfx/area.png";
     this.area.alt = "area";
 
-    this.height = -65535 + 590;
+    //this.height = -65535 + 590;
     //this.height = -54642
+    this.height = -54942
     //this.height = -65535 + 300
 
     this.frame = 0;
@@ -47,7 +48,13 @@ function Data() {
         fastship: [43, 258, 26, 38, -8],
         curr: [21, 23, 13, 23, 4],
 
-        civil3: [300, 32, 12, 23, 4]
+        civil1: [258, 36, 7, 16, 2],
+        civil2: [277, 33, 13, 21, 4],
+        civil3: [300, 32, 12, 23, 4],
+
+        enemy1: [16, 140, 12, 23, 4],
+        enemy2: [93, 141, 16, 22, 6],
+        enemy3: [161, 133, 14, 40, 6]
     }
 
     this.colors_tab = ["grey", "blue", "red"];
@@ -58,5 +65,6 @@ function Data() {
         blue: [76, 109, 243, 255],
         red: [207, 0, 0, 255],
         curr: [121, 121, 121, 255],
+        trans: [0, 0, 0, 0]
     }
 }
