@@ -11,9 +11,9 @@ function Data() {
     this.area.src = "gfx/area.png";
     this.area.alt = "area";
 
-    //this.height = -65535 + 590;
+    this.height = -65535 + 590;
     //this.height = -54642
-    this.height = -54942
+    //this.height = -54942
     //this.height = -65535 + 300
 
     this.frame = 0;
@@ -40,6 +40,8 @@ function Data() {
         trans: 0,
         r: 4
     }
+
+
 
     this.map = {
         player: [21, 23, 13, 23, 4],
