@@ -5,6 +5,7 @@ html, body {
     height: 100%;
     display: table;
     background-color: grey;
+    overflow: hidden;
 }
 
 .main {
@@ -24,7 +25,7 @@ html, body {
 canvas {
     display: block;
     border: 1px solid black;
-    margin: 0 auto;
+    z-index: 1;
 }
 
 #area {
@@ -33,4 +34,30 @@ canvas {
 
 img {
     display: none;
+}
+
+#inner {
+    margin: 0 auto;
+    position: relative;
+    width: 480px;
+    height: 300px;
+}
+
+.hide {
+    z-index: 2;
+    background-color: grey;
+    width: 129px;
+    height: 302px;
+    position: absolute;
+    top: 0px;
+}
+
+#l {
+    left: 0px;
+    border-right: 1px solid black;
+}
+
+#r {
+    right: -2px;
+    border-left: 1px solid black;
 }
