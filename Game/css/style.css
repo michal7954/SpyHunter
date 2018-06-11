@@ -50,6 +50,7 @@ img {
     height: 302px;
     position: absolute;
     top: 0px;
+    display: block;
 }
 
 #l {

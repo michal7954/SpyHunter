@@ -11,10 +11,17 @@ function Data() {
     this.area.src = "gfx/area.png";
     this.area.alt = "area";
 
-    this.height = -65535 + 590;
+    this.height = -65535 + 590 + 120;
     //this.height = -54642
     //this.height = -54942
     //this.height = -65535 + 300
+
+    this.game = true;
+    this.score = 0;
+    this.points = 0;
+    this.startPoint = f.getStartPoint()
+    this.time = 10
+    this.timeLeft
 
     this.frame = 0;
     this.shot_frame;
@@ -22,7 +29,7 @@ function Data() {
     this.shots = []
     this.distance = 100
     this.bullet_speed = 5;
-    this.kick = 6
+    this.kick = 10
     this.pression = 1
 
     this.speed = {

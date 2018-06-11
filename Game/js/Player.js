@@ -21,10 +21,7 @@ function Player() {
 
         if (kol.wl && kol.wr) {
             //bum
-            data.speed.curr = 0;
-            //data.poz.x = 200
-            data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
-
+            f.playerCollision()
 
         }
         else if (kol.wl || kol.wr) {

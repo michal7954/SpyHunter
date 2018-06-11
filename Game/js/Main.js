@@ -8,28 +8,22 @@ var old_shot;
 
 window.onload = function () {
 
+    f = new Functions()
     data = new Data();
     events = new Events();
-    f = new Functions()
     player = new Player();
 
-    data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
-
-    setTimeout(function () {
-        render();
-
-
-        bots.push(new Bot());
-    }, 1000)
-
-
+    render();
 };
 
 function render() {
 
     // MAPA
-    data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
-    data.height = data.height + data.speed.curr;
+    if (data.game) {
+        data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
+        data.height = data.height + data.speed.curr;
+    }
+
 
 
     //TRUE COLORS
@@ -42,7 +36,10 @@ function render() {
         data.colors.red = data.ctx.getImageData(2, 299, 1, 1).data;
     }
 
-    player.renderer();
+    if (player && data.game) {
+        player.renderer();
+    }
+
 
 
     if (data.frame % 60 == 0) {
@@ -76,34 +73,30 @@ function render() {
                 //KOLIZJA Z PLAYEREM
                 if (data.poz.x < bots[i].poz.x1 &&
                     data.poz.x1 > bots[i].poz.x) {
-                    console.log("coll")
 
                     if (data.poz.x > bots[i].poz.x) {
-                        //data.poz.x = data.poz.x - 3;
-                        data.speed.curr = data.speed.curr / 2;
-                        if (data.speed.curr < 0)
-                            data.speed.curr = 0
-                        bots[i].poz.x = bots[i].poz.x + data.kick;
+                        f.playerCollision()
                     }
                     else {
                         data.poz.x = data.poz.x + data.kick;
                         bots[i].poz.x = bots[i].poz.x - data.kick;
                     }
-
-                    if (data.poz.y < bots[i].poz.y) {
-                        data.poz.y = data.poz.y - data.kick;
-                        bots[i].poz.y = bots[i].poz.y + data.kick;
-                    }
-                    else {
-                        data.poz.y = data.poz.y + data.kick;
-                        bots[i].poz.y = bots[i].poz.y - data.kick;
+                    if (bots[i]) {
+                        if (data.poz.y < bots[i].poz.y) {
+                            data.poz.y = data.poz.y - data.kick;
+                            bots[i].poz.y = bots[i].poz.y + data.kick;
+                        }
+                        else {
+                            data.poz.y = data.poz.y + data.kick;
+                            bots[i].poz.y = bots[i].poz.y - data.kick;
+                        }
                     }
                 }
             }
         }
+
+
         //KOLIZJA Z POCISKAMI
-
-
 
         for (j = 0; j < data.shots.length; j++) {
             if (bots[i]) {
@@ -121,12 +114,17 @@ function render() {
                     shot.x > bot.x &&
                     shot.y < bot.y1 &&
                     shot.y > bot.y) {
-                    console.log("kas")
 
-                    var index = bots.indexOf(bots[i]);
-                    if (index > -1) {
-                        bots.splice(index, 1);
+                    if (bots[i].type.slice(0, 5) == "enemy") {
+                        data.points++;
                     }
+                    else {
+                        data.points--;
+                    }
+
+                    bots.splice(i, 1);
+                    data.shots.splice(j, 1);
+
                 }
             }
         }
@@ -134,8 +132,11 @@ function render() {
 
     }
 
+    if (data.game) {
+        f.updateTime();
+        f.info()
+    }
 
-    //console.log(player)
 
 
     data.frame++;
