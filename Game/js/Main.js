@@ -54,15 +54,20 @@ function render() {
         bots[i].render()
 
         //console.log(bots)
+        //KOLIZJA Z PLAYEREM
         if (bots[i]) {
+
             if (data.poz.x < bots[i].poz.x1 &&
                 data.poz.x1 > bots[i].poz.x &&
                 data.poz.y < bots[i].poz.y1 &&
                 data.poz.y1 > bots[i].poz.y) {
                 console.log("coll")
 
-                if (data.poz.x < bots[i].poz.x) {
-                    data.poz.x = data.poz.x - 3;
+                if (data.poz.x > bots[i].poz.x) {
+                    //data.poz.x = data.poz.x - 3;
+                    data.speed.curr = data.speed.curr / 2;
+                    if (data.speed.curr < 0)
+                        data.speed.curr = 0
                     bots[i].poz.x = bots[i].poz.x + 3;
                 }
                 else {
@@ -77,6 +82,35 @@ function render() {
                 else {
                     data.poz.y = data.poz.y + 3;
                     bots[i].poz.y = bots[i].poz.y - 3;
+                }
+            }
+        }
+        //KOLIZJA Z POCISKAMI
+
+
+
+        for (j = 0; j < data.shots.length; j++) {
+            if (bots[i]) {
+                var bot = {}
+                bot.x = bots[i].poz.x
+                bot.y = bots[i].poz.y
+                bot.x1 = bots[i].poz.x1
+                bot.y1 = bots[i].poz.y1
+
+                var shot = {}
+                shot.x = data.shots[j].x
+                shot.y = data.shots[j].y
+
+                if (shot.x < bot.x1 &&
+                    shot.x > bot.x &&
+                    shot.y < bot.y1 &&
+                    shot.y > bot.y) {
+                    console.log("kas")
+
+                    var index = bots.indexOf(bots[i]);
+                    if (index > -1) {
+                        bots.splice(index, 1);
+                    }
                 }
             }
         }

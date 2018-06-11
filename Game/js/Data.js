@@ -18,9 +18,9 @@ function Data() {
 
     this.frame = 0;
     this.shot_frame;
-    this.shot_freq = 1;
+    this.shot_freq = 10;
     this.shots = []
-    this.distance = 150
+    this.distance = 100
     this.bullet_speed = 5;
 
     this.speed = {
