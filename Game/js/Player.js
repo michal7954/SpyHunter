@@ -21,29 +21,8 @@ function Player() {
 
         if (kol.wl && kol.wr) {
             //bum
-            data.speed.curr = 0;
-            //data.poz.x = 200
-            data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
+            f.playerCollision()
 
-
-            /*
-            var i = 80;
-            var x = 0;
-            
-            while (data.ctx.getImageData(351 - i, data.poz.y, 1, 1).data != data.colors.grey) {
-                i++;
-                //x = 351 - i
-            }
-            
-            while (i < 200) {
-                console.log(data.ctx.getImageData(351 - i, data.poz.y, 1, 1).data)
-                i++
-                if (data.ctx.getImageData(i, data.poz.y, 1, 1).data == data.colors.grey) {
-                    x = i
-                }
-            }
-            data.poz.x = i
-            */
         }
         else if (kol.wl || kol.wr) {
             //drgawki
@@ -130,7 +109,14 @@ function Player() {
                 data.shot_frame = data.frame
 
                 var shot = {
-                    x: data.poz.x,
+                    x: data.poz.x + 2.5,
+                    y: data.poz.y,
+                    ttl: data.distance / data.bullet_speed,
+                }
+                data.shots.push(shot)
+
+                var shot = {
+                    x: data.poz.x + data.map.curr[2] - 2.5,
                     y: data.poz.y,
                     ttl: data.distance / data.bullet_speed,
                 }
@@ -147,8 +133,8 @@ function Player() {
                 data.ctx.moveTo(data.shots[i].x, data.shots[i].y);
                 data.ctx.lineTo(data.shots[i].x, data.shots[i].y - 2);
 
-                data.ctx.moveTo(data.shots[i].x + data.map.curr[2], data.shots[i].y);
-                data.ctx.lineTo(data.shots[i].x + data.map.curr[2], data.shots[i].y - 2);
+                //data.ctx.moveTo(data.shots[i].x + data.map.curr[2], data.shots[i].y);
+                //data.ctx.lineTo(data.shots[i].x + data.map.curr[2], data.shots[i].y - 2);
 
                 data.ctx.lineWidth = 2;
                 data.ctx.strokeStyle = "rgba(1,0,0,1)"

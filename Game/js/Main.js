@@ -8,28 +8,22 @@ var old_shot;
 
 window.onload = function () {
 
+    f = new Functions()
     data = new Data();
     events = new Events();
-    f = new Functions()
     player = new Player();
 
-    data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
-
-    setTimeout(function () {
-        render();
-
-
-        bots.push(new Bot());
-    }, 1000)
-
-
+    render();
 };
 
 function render() {
 
     // MAPA
-    data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
-    data.height = data.height + data.speed.curr;
+    if (data.game) {
+        data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
+        data.height = data.height + data.speed.curr;
+    }
+
 
 
     //TRUE COLORS
@@ -42,7 +36,10 @@ function render() {
         data.colors.red = data.ctx.getImageData(2, 299, 1, 1).data;
     }
 
-    player.renderer();
+    if (player && data.game) {
+        player.renderer();
+    }
+
 
 
     if (data.frame % 60 == 0) {
@@ -54,29 +51,80 @@ function render() {
         bots[i].render()
 
         //console.log(bots)
+
         if (bots[i]) {
-            if (data.poz.x < bots[i].poz.x1 &&
-                data.poz.x1 > bots[i].poz.x &&
-                data.poz.y < bots[i].poz.y1 &&
+
+            if (data.poz.y < bots[i].poz.y1 &&
                 data.poz.y1 > bots[i].poz.y) {
-                console.log("coll")
 
-                if (data.poz.x < bots[i].poz.x) {
-                    data.poz.x = data.poz.x - 3;
-                    bots[i].poz.x = bots[i].poz.x + 3;
-                }
-                else {
-                    data.poz.x = data.poz.x + 3;
-                    bots[i].poz.x = bots[i].poz.x - 3;
+                //console.log(bots[i].type.slice(0, 5))
+                if (bots[i].type.slice(0, 5) == "enemy") {
+
+                    if (data.poz.x > bots[i].poz.x) {
+                        bots[i].poz.x = bots[i].poz.x + data.pression;
+                    }
+                    else {
+                        bots[i].poz.x = bots[i].poz.x - data.pression;
+                    }
+
                 }
 
-                if (data.poz.y < bots[i].poz.y) {
-                    data.poz.y = data.poz.y - 3;
-                    bots[i].poz.y = bots[i].poz.y + 3;
+
+                //KOLIZJA Z PLAYEREM
+                if (data.poz.x < bots[i].poz.x1 &&
+                    data.poz.x1 > bots[i].poz.x) {
+
+                    if (data.poz.x > bots[i].poz.x) {
+                        f.playerCollision()
+                    }
+                    else {
+                        data.poz.x = data.poz.x + data.kick;
+                        bots[i].poz.x = bots[i].poz.x - data.kick;
+                    }
+                    if (bots[i]) {
+                        if (data.poz.y < bots[i].poz.y) {
+                            data.poz.y = data.poz.y - data.kick;
+                            bots[i].poz.y = bots[i].poz.y + data.kick;
+                        }
+                        else {
+                            data.poz.y = data.poz.y + data.kick;
+                            bots[i].poz.y = bots[i].poz.y - data.kick;
+                        }
+                    }
                 }
-                else {
-                    data.poz.y = data.poz.y + 3;
-                    bots[i].poz.y = bots[i].poz.y - 3;
+            }
+        }
+
+
+        //KOLIZJA Z POCISKAMI
+
+        for (j = 0; j < data.shots.length; j++) {
+            if (bots[i]) {
+                var bot = {}
+                bot.x = bots[i].poz.x
+                bot.y = bots[i].poz.y
+                bot.x1 = bots[i].poz.x1
+                bot.y1 = bots[i].poz.y1
+
+                var shot = {}
+                shot.x = data.shots[j].x
+                shot.y = data.shots[j].y
+
+                if (shot.x < bot.x1 &&
+                    shot.x > bot.x &&
+                    shot.y < bot.y1 &&
+                    shot.y > bot.y) {
+
+                    if (bots[i].type.slice(0, 5) == "enemy") {
+                        data.points++;
+                    }
+                    else {
+                        data.points--;
+                    }
+
+                    bots.splice(i, 1);
+                    data.shots.splice(j, 1);
+
                 }
             }
         }
@@ -84,8 +132,11 @@ function render() {
 
     }
 
+    if (data.game) {
+        f.updateTime();
+        f.info()
+    }
 
-    //console.log(player)
 
 
     data.frame++;
