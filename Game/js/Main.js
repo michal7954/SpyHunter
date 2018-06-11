@@ -42,7 +42,7 @@ function render() {
 
 
 
-    if (data.frame % 60 == 0) {
+    if (data.frame % 60 == 0 && data.colors.curr == data.colors.grey) {
         bots.push(new Bot());
     }
 
@@ -78,6 +78,13 @@ function render() {
                         f.playerCollision()
                     }
                     else {
+                        if (bots[i].type.slice(0, 5) == "enemy") {
+                            data.points++;
+                        }
+                        else {
+                            data.points--;
+                        }
+                        bots.splice(i, 1);
                         data.poz.x = data.poz.x + data.kick;
                         bots[i].poz.x = bots[i].poz.x - data.kick;
                     }

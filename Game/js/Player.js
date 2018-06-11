@@ -38,6 +38,12 @@ function Player() {
             data.poz.trans = 0;
         }
 
+        if (data.poz.x < 128 || data.poz.x > 351) {
+            data.height = data.height + 100
+            f.playerCollision()
+
+        }
+
 
         //WYBÓR POJAZDU
         var pixel = data.ctx.getImageData(data.poz.x, data.poz.y - 4, 1, 1).data;

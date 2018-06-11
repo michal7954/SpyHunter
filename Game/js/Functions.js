@@ -59,25 +59,27 @@ function Functions() {
             data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
             data.points = data.points - 5
             //data.height = data.height + 50
+            data.speed.curr = 0;
             setTimeout(function () {
+                for (i = 352; i > 128; i--) {
+                    if (f.colorColl(i, data.poz.y, data.colors.curr)) {
+                        var point = i - data.map.curr[2];
+                        console.log("bla")
+                        if (f.colorColl(point, data.poz.y, data.colors.curr) &&
+                            f.colorColl(point + data.map.curr[2], data.poz.y, data.colors.curr) &&
+                            f.colorColl(point, data.poz.y + data.map.curr[3], data.colors.curr) &&
+                            f.colorColl(point + data.map.curr[2], data.poz.y + data.map.curr[3], data.colors.curr)
+                        ) {
+                            data.poz.x = point;
+
+                            i = 127
+                        }
+                    }
+                }
                 player = new Player()
             }, 2000);
 
-            for (i = 352; i > 128; i--) {
-                if (f.colorColl(i, data.poz.y, data.colors.curr)) {
-                    var point = i - data.map.curr[2];
-                    console.log("bla")
-                    if (f.colorColl(point, data.poz.y, data.colors.curr) &&
-                        f.colorColl(point + data.map.curr[2], data.poz.y, data.colors.curr) &&
-                        f.colorColl(point, data.poz.y + data.map.curr[3], data.colors.curr) &&
-                        f.colorColl(point + data.map.curr[2], data.poz.y + data.map.curr[3], data.colors.curr)
-                    ) {
-                        data.poz.x = point;
 
-                        i = 127
-                    }
-                }
-            }
         }
         else {
             f.gameOver();
