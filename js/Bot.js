@@ -9,7 +9,7 @@ function Bot() {
     this.poz = {
         x: -1000,
         y: -20,
-        speed: Math.floor((Math.random() * 3) + 2)
+        speed: Math.floor((Math.random() * 3) + 1)
     }
 
     for (i = 128; i < 352; i++) {

@@ -34,13 +34,13 @@ function Data() {
 
     this.speed = {
         curr: 0,
-        max: 8,
+        max: 4,
         min: 0,
         acceleration: 0.2,
         deceleration: -0.3,
         poz_range: 10,
         poz_addition: 180,
-        turn_radius: 5
+        turn_radius: 2.5
     }
 
     this.poz = {

@@ -57,7 +57,7 @@ function Functions() {
             player = null
             data.speed.curr = 0;
             data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
-            data.points = data.points - 5
+            data.points = data.points - 2
             //data.height = data.height + 50
             data.speed.curr = 0;
             var znaleziony = false;
