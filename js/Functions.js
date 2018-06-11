@@ -60,19 +60,36 @@ function Functions() {
             data.points = data.points - 5
             //data.height = data.height + 50
             data.speed.curr = 0;
+            var znaleziony = false;
             setTimeout(function () {
                 for (i = 352; i > 128; i--) {
                     if (f.colorColl(i, data.poz.y, data.colors.curr)) {
                         var point = i - data.map.curr[2];
-                        console.log("bla")
                         if (f.colorColl(point, data.poz.y, data.colors.curr) &&
                             f.colorColl(point + data.map.curr[2], data.poz.y, data.colors.curr) &&
                             f.colorColl(point, data.poz.y + data.map.curr[3], data.colors.curr) &&
                             f.colorColl(point + data.map.curr[2], data.poz.y + data.map.curr[3], data.colors.curr)
                         ) {
                             data.poz.x = point;
-
+                            znaleziony = true
                             i = 127
+                        }
+                    }
+                }
+                if (!znaleziony) {
+                    data.colors.curr = data.colors.blue;
+                    data.map.curr = data.map.ship
+                    for (i = 352; i > 128; i--) {
+                        if (f.colorColl(i, data.poz.y, data.colors.curr)) {
+                            var point = i - data.map.curr[2];
+                            if (f.colorColl(point, data.poz.y, data.colors.curr) &&
+                                f.colorColl(point + data.map.curr[2], data.poz.y, data.colors.curr) &&
+                                f.colorColl(point, data.poz.y + data.map.curr[3], data.colors.curr) &&
+                                f.colorColl(point + data.map.curr[2], data.poz.y + data.map.curr[3], data.colors.curr)
+                            ) {
+                                data.poz.x = point;
+                                i = 127
+                            }
                         }
                     }
                 }

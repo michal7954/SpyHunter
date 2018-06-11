@@ -51,8 +51,8 @@ function render() {
         bots[i].render()
 
         //console.log(bots)
-
-        if (bots[i]) {
+        try {
+            //if (bots[i]) {
 
             if (data.poz.y < bots[i].poz.y1 &&
                 data.poz.y1 > bots[i].poz.y) {
@@ -74,10 +74,11 @@ function render() {
                 if (data.poz.x < bots[i].poz.x1 &&
                     data.poz.x1 > bots[i].poz.x) {
 
-                    if (data.poz.x > bots[i].poz.x) {
+                    if (data.poz.x + 10 > bots[i].poz.x) {
                         f.playerCollision()
                     }
                     else {
+                        //if (bots[i]) {
                         if (bots[i].type.slice(0, 5) == "enemy") {
                             data.points++;
                         }
@@ -87,21 +88,25 @@ function render() {
                         bots.splice(i, 1);
                         data.poz.x = data.poz.x + data.kick;
                         bots[i].poz.x = bots[i].poz.x - data.kick;
+                        //}
                     }
-                    if (bots[i]) {
-                        if (data.poz.y < bots[i].poz.y) {
-                            data.poz.y = data.poz.y - data.kick;
-                            bots[i].poz.y = bots[i].poz.y + data.kick;
-                        }
-                        else {
-                            data.poz.y = data.poz.y + data.kick;
-                            bots[i].poz.y = bots[i].poz.y - data.kick;
-                        }
+                    //if (bots[i]) {
+                    if (data.poz.y < bots[i].poz.y) {
+                        data.poz.y = data.poz.y - data.kick;
+                        bots[i].poz.y = bots[i].poz.y + data.kick;
                     }
+                    else {
+                        data.poz.y = data.poz.y + data.kick;
+                        bots[i].poz.y = bots[i].poz.y - data.kick;
+                    }
+                    //}
                 }
             }
+            //}
         }
+        catch{
 
+        }
 
         //KOLIZJA Z POCISKAMI
 
