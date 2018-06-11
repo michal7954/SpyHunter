@@ -20,7 +20,7 @@ function Data() {
     this.score = 0;
     this.points = 0;
     this.startPoint = f.getStartPoint()
-    this.time = 10
+    this.time = 120
     this.timeLeft
 
     this.frame = 0;

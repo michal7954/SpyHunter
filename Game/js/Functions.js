@@ -58,7 +58,7 @@ function Functions() {
             data.speed.curr = 0;
             data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
             data.points = data.points - 5
-
+            //data.height = data.height + 50
             setTimeout(function () {
                 player = new Player()
             }, 2000);
@@ -73,6 +73,7 @@ function Functions() {
                         f.colorColl(point + data.map.curr[2], data.poz.y + data.map.curr[3], data.colors.curr)
                     ) {
                         data.poz.x = point;
+
                         i = 127
                     }
                 }
