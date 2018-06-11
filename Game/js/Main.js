@@ -54,34 +54,50 @@ function render() {
         bots[i].render()
 
         //console.log(bots)
-        //KOLIZJA Z PLAYEREM
+
         if (bots[i]) {
 
-            if (data.poz.x < bots[i].poz.x1 &&
-                data.poz.x1 > bots[i].poz.x &&
-                data.poz.y < bots[i].poz.y1 &&
+            if (data.poz.y < bots[i].poz.y1 &&
                 data.poz.y1 > bots[i].poz.y) {
-                console.log("coll")
 
-                if (data.poz.x > bots[i].poz.x) {
-                    //data.poz.x = data.poz.x - 3;
-                    data.speed.curr = data.speed.curr / 2;
-                    if (data.speed.curr < 0)
-                        data.speed.curr = 0
-                    bots[i].poz.x = bots[i].poz.x + 3;
-                }
-                else {
-                    data.poz.x = data.poz.x + 3;
-                    bots[i].poz.x = bots[i].poz.x - 3;
+                //console.log(bots[i].type.slice(0, 5))
+                if (bots[i].type.slice(0, 5) == "enemy") {
+
+                    if (data.poz.x > bots[i].poz.x) {
+                        bots[i].poz.x = bots[i].poz.x + data.pression;
+                    }
+                    else {
+                        bots[i].poz.x = bots[i].poz.x - data.pression;
+                    }
+
                 }
 
-                if (data.poz.y < bots[i].poz.y) {
-                    data.poz.y = data.poz.y - 3;
-                    bots[i].poz.y = bots[i].poz.y + 3;
-                }
-                else {
-                    data.poz.y = data.poz.y + 3;
-                    bots[i].poz.y = bots[i].poz.y - 3;
+
+                //KOLIZJA Z PLAYEREM
+                if (data.poz.x < bots[i].poz.x1 &&
+                    data.poz.x1 > bots[i].poz.x) {
+                    console.log("coll")
+
+                    if (data.poz.x > bots[i].poz.x) {
+                        //data.poz.x = data.poz.x - 3;
+                        data.speed.curr = data.speed.curr / 2;
+                        if (data.speed.curr < 0)
+                            data.speed.curr = 0
+                        bots[i].poz.x = bots[i].poz.x + data.kick;
+                    }
+                    else {
+                        data.poz.x = data.poz.x + data.kick;
+                        bots[i].poz.x = bots[i].poz.x - data.kick;
+                    }
+
+                    if (data.poz.y < bots[i].poz.y) {
+                        data.poz.y = data.poz.y - data.kick;
+                        bots[i].poz.y = bots[i].poz.y + data.kick;
+                    }
+                    else {
+                        data.poz.y = data.poz.y + data.kick;
+                        bots[i].poz.y = bots[i].poz.y - data.kick;
+                    }
                 }
             }
         }

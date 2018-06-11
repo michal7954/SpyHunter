@@ -22,6 +22,8 @@ function Data() {
     this.shots = []
     this.distance = 100
     this.bullet_speed = 5;
+    this.kick = 6
+    this.pression = 1
 
     this.speed = {
         curr: 0,
