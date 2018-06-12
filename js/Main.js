@@ -105,7 +105,7 @@ function render() {
             //}
         }
         catch (err) {
-            console.log("brak bota")
+            console.log(err)
         }
 
         //KOLIZJA Z POCISKAMI
