@@ -104,8 +104,8 @@ function render() {
             }
             //}
         }
-        catch{
-
+        catch (err) {
+            console.log("brak bota")
         }
 
         //KOLIZJA Z POCISKAMI
