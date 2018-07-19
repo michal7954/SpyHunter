@@ -7,7 +7,6 @@ var bots = [];
 var old_shot;
 
 window.onload = function () {
-
     f = new Functions()
     data = new Data();
     events = new Events();
@@ -18,15 +17,13 @@ window.onload = function () {
 
 function render() {
 
-    // MAPA
+    // draw map
     if (data.game) {
         data.ctx.drawImage(data.area, 0, data.height, 480, 65535);
         data.height = data.height + data.speed.curr;
     }
 
-
-
-    //TRUE COLORS
+    // find true colors
     if (data.colors.grey[0] == 0) {
 
         data.ctx.drawImage(data.area, 0, 65534, 3, 1, 0, 299, 3, 1)
@@ -40,37 +37,29 @@ function render() {
         player.renderer();
     }
 
-
-
     if (data.frame % 60 == 0 && data.colors.curr == data.colors.grey) {
         bots.push(new Bot());
     }
 
-    //BOTY
+    // bots
     for (i = 0; i < bots.length; i++) {
         bots[i].render()
 
-        //console.log(bots)
         try {
-            //if (bots[i]) {
 
             if (data.poz.y < bots[i].poz.y1 &&
                 data.poz.y1 > bots[i].poz.y) {
 
-                //console.log(bots[i].type.slice(0, 5))
                 if (bots[i].type.slice(0, 5) == "enemy") {
-
                     if (data.poz.x > bots[i].poz.x) {
                         bots[i].poz.x = bots[i].poz.x + data.pression;
                     }
                     else {
                         bots[i].poz.x = bots[i].poz.x - data.pression;
                     }
-
                 }
 
-
-                //KOLIZJA Z PLAYEREM
+                // player collision
                 if (data.poz.x < bots[i].poz.x1 &&
                     data.poz.x1 > bots[i].poz.x) {
 
@@ -99,17 +88,11 @@ function render() {
                         data.poz.y = data.poz.y + data.kick;
                         bots[i].poz.y = bots[i].poz.y - data.kick;
                     }
-                    //}
                 }
             }
-            //}
-        }
-        catch (err) {
-            console.log(err)
         }
 
-        //KOLIZJA Z POCISKAMI
-
+        //bullets collision
         for (j = 0; j < data.shots.length; j++) {
             if (bots[i]) {
                 var bot = {}
@@ -136,12 +119,9 @@ function render() {
 
                     bots.splice(i, 1);
                     data.shots.splice(j, 1);
-
                 }
             }
         }
-
-
     }
 
     if (data.game) {
@@ -149,9 +129,6 @@ function render() {
         f.info()
     }
 
-
-
     data.frame++;
     requestAnimationFrame(render);
 };
-
