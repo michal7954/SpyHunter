@@ -11,16 +11,12 @@ function Data() {
     this.area.src = "gfx/area.png";
     this.area.alt = "area";
 
-    this.height = -65535 + 590 + 120;
-    //this.height = -54642
-    //this.height = -54942
-    //this.height = -65535 + 300
-
+    this.height = -65535 + 300
     this.game = true;
     this.score = 0;
     this.points = 0;
     this.startPoint = f.getStartPoint()
-    this.time = 60
+    this.time = 180
     this.timeLeft
 
     this.frame = 0;
@@ -50,8 +46,6 @@ function Data() {
         r: 4
     }
 
-
-
     this.map = {
         player: [21, 23, 13, 23, 4],
         speedy: [45, 23, 13, 31, 4],
@@ -71,8 +65,7 @@ function Data() {
     this.colors_tab = ["grey", "blue", "red"];
 
     this.colors = {
-        grey: [0],
-        //grey: [121, 121, 121, 255],
+        grey: [121, 121, 121, 255],
         blue: [76, 109, 243, 255],
         red: [207, 0, 0, 255],
         curr: [121, 121, 121, 255],
