@@ -1,16 +1,13 @@
 function Events() {
-
+    
     events = this;
-
     this.up = false
     this.down = false
     this.left = false
     this.right = false
     this.fire = false;
 
-
     document.onkeydown = function (e) {
-        //console.log(e.code)
         if (e.code == "ArrowUp") {
             events.up = true
         }
