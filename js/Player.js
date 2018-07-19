@@ -1,14 +1,14 @@
 function Player() {
 
     this.renderer = function () {
-        //KOLIZJE Z MAPĄ
+        
+        // map collisions
         var kol = {
             pl: data.ctx.getImageData(data.poz.x - data.map.curr[4], data.poz.y - 1, 1, 1).data,
             pr: data.ctx.getImageData(data.poz.x + data.map.curr[4] + data.map.curr[2], data.poz.y - 1, 1, 1).data,
             wl: true,
             wr: true,
         }
-        //console.log(kol.pl)
 
         for (i = 0; i < data.colors_tab.length; i++) {
             if (kol.pl[0] == data.colors[data.colors_tab[i]][0] && kol.pl[1] == data.colors[data.colors_tab[i]][1] && kol.pl[2] == data.colors[data.colors_tab[i]][2] && kol.pl[3] == data.colors[data.colors_tab[i]][3]) {
@@ -22,7 +22,6 @@ function Player() {
         if (kol.wl && kol.wr) {
             //bum
             f.playerCollision()
-
         }
         else if (kol.wl || kol.wr) {
             //drgawki
@@ -37,15 +36,12 @@ function Player() {
             //gut
             data.poz.trans = 0;
         }
-
         if (data.poz.x < 128 || data.poz.x > 351) {
             data.height = data.height + 100
             f.playerCollision()
-
         }
 
-
-        //WYBÓR POJAZDU
+        // select type of vehicle
         var pixel = data.ctx.getImageData(data.poz.x, data.poz.y - 4, 1, 1).data;
 
         if (pixel[0] == data.colors.blue[0] && pixel[1] == data.colors.blue[1] && pixel[2] == data.colors.blue[2] && pixel[3] == data.colors.blue[3]) {
@@ -74,9 +70,7 @@ function Player() {
             }
         }
 
-
-
-        // STEROWANIE GRACZEM
+        // player control
         if (events.up && data.speed.curr <= data.speed.max) {
             data.speed.curr = data.speed.curr + data.speed.acceleration;
             data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
@@ -108,8 +102,7 @@ function Player() {
         data.poz.h = data.map.curr[3]
 
 
-        //STRZAŁY
-
+        // weapon
         if (events.fire) {
             if (data.frame - data.shot_frame > data.shot_freq || data.shot_frame == undefined) {
                 data.shot_frame = data.frame
@@ -153,21 +146,5 @@ function Player() {
                 data.shots.splice(i, 1);
             }
         }
-
-        //RYSOWANIE PUNKTÓW SPRAWDZANIA
-        data.ctx.beginPath();
-
-        data.ctx.moveTo(data.poz.x - data.map.curr[4], data.poz.y);
-        data.ctx.lineTo(data.poz.x - data.map.curr[4], data.poz.y - 2);
-
-        data.ctx.moveTo(data.poz.x + data.map.curr[4] + data.map.curr[2], data.poz.y);
-        data.ctx.lineTo(data.poz.x + data.map.curr[4] + data.map.curr[2], data.poz.y - 2);
-
-        //data.ctx.moveTo(data.poz.x, data.poz.y - 4);
-        //data.ctx.lineTo(data.poz.x, data.poz.y - 6);
-
-        data.ctx.lineWidth = 1;
-        data.ctx.strokeStyle = "rgba(0,0,0,1)"
-        //data.ctx.stroke();
     }
 }
