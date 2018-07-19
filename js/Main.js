@@ -91,6 +91,7 @@ function render() {
                 }
             }
         }
+        catch {}
 
         //bullets collision
         for (j = 0; j < data.shots.length; j++) {
