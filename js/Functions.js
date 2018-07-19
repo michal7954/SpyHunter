@@ -2,9 +2,7 @@ function Functions() {
 
     var f = this;
 
-
     this.colorColl = function (x, y, color) {
-
         pixel = data.ctx.getImageData(x, y, 1, 1).data;
         if (pixel[0] == color[0] && pixel[1] == color[1] && pixel[2] == color[2] && pixel[3] == color[3]) {
             return true;
@@ -51,9 +49,7 @@ function Functions() {
     }
 
     this.playerCollision = function () {
-
         if (data.timeLeft > 0) {
-
             player = null
             data.speed.curr = 0;
             data.poz.y = (data.speed.max - data.speed.curr) * data.speed.poz_range + data.speed.poz_addition
@@ -95,14 +91,10 @@ function Functions() {
                 }
                 player = new Player()
             }, 2000);
-
-
         }
         else {
             f.gameOver();
         }
-
-
     }
 
     this.gameOver = function () {
@@ -121,6 +113,5 @@ function Functions() {
             data.ctx.fillText("GAME OVER!", 175, 150);
             data.ctx.fillText("Score: " + data.score, 205, 180);
         }, 10);
-
     }
 }
