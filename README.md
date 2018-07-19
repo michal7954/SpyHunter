@@ -2,8 +2,8 @@
 Aplikacje klienckie - projekt końcoworoczny - gra z komuptera Commodore 64
 
 Sterowanie:
-    ruch - strzałki kierunkowe,
-    strzelanie - L Ctrl
+    - ruch - strzałki kierunkowe,
+    - strzelanie - L Ctrl
 
 Wskazówki:
     Niszcz niebieskie samochody.
